@@ -32,7 +32,7 @@
 1. Components of authentication - whiteboarding
 2. PassportJS
 3. Bcrypt
-4. In class build - Simple auth service
+4. In class build - Simple auth service [EXAMPLE](https://javascript.plainenglish.io/session-authentication-with-node-js-express-passport-and-mongodb-ffd1eea4521c)
    1. BE -> Create and authenticate a user
    2. FE -> Create "Auth" routes
 5. 
