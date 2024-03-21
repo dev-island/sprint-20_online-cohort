@@ -150,6 +150,13 @@ So with JWTs We have two options:
 Once we've build the backend, we'll also need to build a way on the client to keep track of the user's authenticated state
 
 
+### Logging out with JWT
+Since we're not storing the JWT on the backend, we technically could just delete the JWT from the client. However, it would still be considered "valid" if some how someone was able to get it and use it to send to the backend. So there are a few things you should do IF you want to be extra secure: 
+1. Set a reasonable expiration time on tokens
+2. Delete the stored token from client side upon log out
+3. Have DB of no longer active tokens that still have some time to live
+4. Query provided token against The Blacklist on every authorized request
+
 ==Disclaimer==
 Blog post on the dangers of using JWTs for user sessions:
 [JSON Web Tokens (JWT) are Dangerous for User Sessions — Here’s a Solution](https://redis.com/blog/json-web-tokens-jwt-are-dangerous-for-user-sessions/)
