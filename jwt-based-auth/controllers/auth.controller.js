@@ -52,14 +52,6 @@ const register = async (req, res, next) => {
   }
 };
 
-const logout = async (req, res, next) => {
-  try {
-    req.logOut(() => res.status(200).json({ message: "Logged out" }));
-  } catch (error) {
-    next(error);
-  }
-};
-
 module.exports = {
   login,
   register,

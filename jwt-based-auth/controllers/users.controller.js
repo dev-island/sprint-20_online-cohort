@@ -12,7 +12,6 @@ const listUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   let statusCode = 500;
-  console.log("REQ", req);
   try {
     const user = await User.findById(req.params.id);
     if (!user) {

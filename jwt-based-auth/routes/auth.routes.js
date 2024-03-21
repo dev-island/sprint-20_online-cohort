@@ -4,6 +4,5 @@ const verifyBody = require("../middleware/verifyBody");
 
 router.post("/login", verifyBody, authController.login);
 router.post("/register", verifyBody, authController.register);
-router.delete("/logout", authController.logout);
 
 module.exports = router;
