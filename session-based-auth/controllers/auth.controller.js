@@ -1,7 +1,7 @@
 const passport = require("passport");
 const User = require("../models/User");
 
-const login = async (req, res, next) => {
+const handleLogin = async (req, res, next) => {
   try {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -24,10 +24,15 @@ const login = async (req, res, next) => {
   }
 };
 
-const register = async (req, res, next) => {
+const handleRegister = async (req, res, next) => {
+  console.log("registering user", {
+    body: req.body,
+    user: req.user,
+  });
   try {
     const { username, password } = req.body;
     User.register(new User({ username }), password, (err, user) => {
+      console.log("User has been registered and created", { user, err })
       if (err) {
         next(err);
       }
@@ -43,7 +48,7 @@ const register = async (req, res, next) => {
   }
 };
 
-const logout = async (req, res) => {
+const handleLogout = async (req, res) => {
   try {
     req.logOut(() => res.status(200).json({ message: "Logged out" }));
   } catch (error) {
@@ -52,7 +57,7 @@ const logout = async (req, res) => {
 };
 
 module.exports = {
-  login,
-  register,
-  logout,
+  handleLogin,
+  handleRegister,
+  handleLogout,
 };

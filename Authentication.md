@@ -160,3 +160,9 @@ Since we're not storing the JWT on the backend, we technically could just delete
 ==Disclaimer==
 Blog post on the dangers of using JWTs for user sessions:
 [JSON Web Tokens (JWT) are Dangerous for User Sessions — Here’s a Solution](https://redis.com/blog/json-web-tokens-jwt-are-dangerous-for-user-sessions/)
+
+
+
+### OAuth 2.0 
+
+![oauth](https://i.ytimg.com/vi/CPbvxxslDTU/maxresdefault.jpg)

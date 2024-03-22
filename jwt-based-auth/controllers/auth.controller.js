@@ -2,7 +2,7 @@ const passport = require("passport");
 const User = require("../models/User");
 const { getToken } = require("../lib/jwt");
 
-const login = async (req, res, next) => {
+const handleLogin = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -36,15 +36,16 @@ const login = async (req, res, next) => {
   }
 };
 
-const register = async (req, res, next) => {
+const handleRegister = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     User.register(new User({ username }), password, (err, user) => {
       if (err) {
         next(err);
       }
-
-      const token = getToken({ _id: user._id, username: user.username });
+      // Now that we have stored the user in the DB, we create a JWT and send it back to the client
+      // Call the getToken method from the lib/jwt.js file (the one Andrew wrote for this demo)
+      const token = getToken(user._id, { ...user });
       res.status(201).json({ data: { accessToken: `Bearer ${token}` } });
     });
   } catch (error) {
@@ -53,7 +54,6 @@ const register = async (req, res, next) => {
 };
 
 module.exports = {
-  login,
-  register,
-  logout,
+  handleLogin,
+  handleRegister,
 };

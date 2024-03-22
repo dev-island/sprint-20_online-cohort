@@ -2,9 +2,9 @@
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
-exports.getToken = (id) => {
+exports.getToken = (id, params = {}) => {
   // create the jwt using the id as the sub
-  return jwt.sign({ sub: id }, process.env.JWT_SECRET, { expiresIn: 3600 });
+  return jwt.sign({ sub: id, ...params }, process.env.JWT_SECRET, { expiresIn: 3600 });
 };
 
 // To authenticate on subsequent requests we use passport to handle the JWT verification.

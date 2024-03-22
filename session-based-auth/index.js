@@ -7,7 +7,7 @@ const cors = require("cors");
 const session = require("express-session");
 const User = require("./models/User");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const { Strategy } = require("passport-local");
 
 const MongoStore = require("connect-mongo");
 
@@ -32,6 +32,10 @@ mongoose
   });
 
 const checkIsAuthenticated = (req, res, next) => {
+  console.log("isAuthenticated", {
+    req
+  })
+
   if (req.isAuthenticated()) {
     return next();
   }
@@ -112,7 +116,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new Strategy(User.authenticate()));
 
 // Routes
 app.use("/auth", authRouter);
