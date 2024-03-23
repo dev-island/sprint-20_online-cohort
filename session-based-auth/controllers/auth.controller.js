@@ -2,6 +2,11 @@ const passport = require("passport");
 const User = require("../models/User");
 
 const handleLogin = async (req, res, next) => {
+  console.log("logging in user", {
+    body: req.body,
+    user: req.user,
+  })
+
   try {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -16,7 +21,7 @@ const handleLogin = async (req, res, next) => {
           throw new Error(err.message);
           // return res.status(500).json({ error: err.message });
         }
-        return res.status(200).json({ user });
+        res.status(200).json({ user });
       });
     })(req, res);
   } catch (error) {

@@ -16,7 +16,13 @@ const authRouter = require("./routes/auth.routes");
 const userRouter = require("./routes/user.routes");
 const errorhandler = require("./middleware/errorHandler.middleware");
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    exposedHeaders: ["set-cookie"],
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
 app.use(logger("dev"));
 
@@ -67,6 +73,10 @@ app.use(
       collectionName: "sessions",
       dbName: "simple-auth",
     }),
+    cookie: {
+      // NOTE MUST SET THIS IF YOU WANT THE FRONT END TO BE ABLE TO ACCESS THE COOKIE
+      httpOnly: false,
+    },
   })
 );
 
