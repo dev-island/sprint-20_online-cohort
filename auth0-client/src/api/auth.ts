@@ -1,0 +1,60 @@
+import { API_URL } from "./config";
+
+export const login = async ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) => {
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ username, password }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to login");
+  }
+
+  return await res.json();
+};
+
+export const register = async ({
+  username,
+  password,
+  confirmPassword,
+}: {
+  username: string;
+  password: string;
+  confirmPassword: string;
+}) => {
+  const res = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ username, password, confirmPassword }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to register");
+  }
+
+  return await res.json();
+};
+
+export const logout = async () => {
+  const res = await fetch(`${API_URL}/auth/logout`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to logout");
+  }
+  return await res.json();
+};
