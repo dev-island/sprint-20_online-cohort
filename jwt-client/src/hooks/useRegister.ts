@@ -4,13 +4,14 @@ import * as api from "../api/auth";
 import getErrorMessage from "../utils/getErrorMessage";
 import { RegisterFormData } from "../types";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "./useAuthContext";
 
 const useRegister = () => {
+  const { setToken } = useAuthContext();
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<unknown | null>(null);
 
   const register = async ({
     username,
@@ -20,7 +21,8 @@ const useRegister = () => {
     setLoading(true);
     try {
       const res = await api.register({ username, password, confirmPassword });
-      setData(res.data);
+      console.log("RES", res.accessToken);
+      setToken(res.accessToken);
       navigate("/profile");
     } catch (err) {
       console.error("failed to register", err);
@@ -44,7 +46,7 @@ const useRegister = () => {
     }
   }, [error, toast]);
 
-  return { loading, error, data, register };
+  return { loading, error, register };
 };
 
 export default useRegister;

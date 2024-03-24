@@ -12,7 +12,6 @@ export const login = async ({
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify({ username, password }),
   });
 
@@ -20,7 +19,8 @@ export const login = async ({
     throw new Error("Failed to login");
   }
 
-  return await res.json();
+  const { data } = await res.json();
+  return data;
 };
 
 export const register = async ({
@@ -37,7 +37,6 @@ export const register = async ({
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify({ username, password, confirmPassword }),
   });
 
@@ -45,16 +44,6 @@ export const register = async ({
     throw new Error("Failed to register");
   }
 
-  return await res.json();
-};
-
-export const logout = async () => {
-  const res = await fetch(`${API_URL}/auth/logout`, {
-    method: "DELETE",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to logout");
-  }
-  return await res.json();
+  const { data } = await res.json();
+  return data;
 };

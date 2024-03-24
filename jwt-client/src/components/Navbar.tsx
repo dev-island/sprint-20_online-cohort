@@ -1,10 +1,10 @@
 import { Box, Flex, Button, Stack, useColorModeValue } from "@chakra-ui/react";
-import useAuth from "../hooks/useAuth";
+import useAuthContext from "../hooks/useAuthContext";
 import useLogout from "../hooks/useLogout";
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
-  const { logout, loading } = useLogout()
+  const { isAuthenticated } = useAuthContext();
+  const { logout, loading } = useLogout();
 
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkColorHover = useColorModeValue("gray.800", "white");
@@ -24,7 +24,7 @@ export default function Navbar() {
         justify={"space-between"}
       >
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-        {isAuthenticated && (
+          {isAuthenticated && (
             <Box
               as="a"
               p={2}
@@ -39,7 +39,7 @@ export default function Navbar() {
             >
               Profile
             </Box>
-        )}
+          )}
         </Flex>
 
         <Stack

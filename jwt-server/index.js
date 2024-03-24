@@ -10,9 +10,6 @@ const errorhandler = require("./middleware/errorHandler");
 const { Strategy, ExtractJwt } = require("passport-jwt");
 
 const SECRET = process.env.JWT_SECRET;
-// Routers
-const authRouter = require("./routes/auth.routes");
-const userRouter = require("./routes/user.routes");
 
 app.use(cors());
 app.use(express.json());
@@ -72,6 +69,8 @@ passport.use(
 );
 
 // Routes
+const authRouter = require("./routes/auth.routes");
+const userRouter = require("./routes/user.routes");
 app.use("/auth", authRouter);
 app.use("/users", checkIsAuthenticated, userRouter);
 app.get("/open", (req, res) => {

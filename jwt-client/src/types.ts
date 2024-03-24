@@ -8,3 +8,8 @@ export type LoginFormData = {
   username: string;
   password: string;
 };
+
+export type User = {
+  _id: string;
+  username: string;
+};
