@@ -1,8 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import AuthRoute from "./components/AuthRoute";
 
@@ -11,7 +10,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/profile"
           element={
@@ -20,7 +19,6 @@ function App() {
             </AuthRoute>
           }
         />
-        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );

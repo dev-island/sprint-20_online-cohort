@@ -1,10 +1,8 @@
 import { Box, Flex, Button, Stack, useColorModeValue } from "@chakra-ui/react";
-import useAuth from "../hooks/useAuth";
-import useLogout from "../hooks/useLogout";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
-  const { logout, loading } = useLogout()
+  const { isLoading, logout, loginWithRedirect, isAuthenticated } = useAuth0();
 
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkColorHover = useColorModeValue("gray.800", "white");
@@ -24,7 +22,7 @@ export default function Navbar() {
         justify={"space-between"}
       >
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-        {isAuthenticated && (
+          {isAuthenticated && (
             <Box
               as="a"
               p={2}
@@ -39,52 +37,44 @@ export default function Navbar() {
             >
               Profile
             </Box>
-        )}
+          )}
         </Flex>
-
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-        >
-          {isAuthenticated ? (
-            <Button
-              fontSize={"sm"}
-              fontWeight={400}
-              variant={"link"}
-              onClick={logout}
-              isLoading={loading}
-            >
-              Logout
-            </Button>
-          ) : (
-            <>
+        {!isLoading ? (
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={6}
+          >
+            {isAuthenticated ? (
               <Button
-                as={"a"}
                 fontSize={"sm"}
                 fontWeight={400}
                 variant={"link"}
-                href={"/"}
+                onClick={() =>
+                  logout({ logoutParams: { returnTo: window.location.origin } })
+                }
               >
-                Sign In
+                Logout
               </Button>
-              <Button
-                as={"a"}
-                fontSize={"sm"}
-                fontWeight={600}
-                color={"white"}
-                bg={"pink.400"}
-                href={"/register"}
-                _hover={{
-                  bg: "pink.300",
-                }}
-              >
-                Sign Up
-              </Button>
-            </>
-          )}
-        </Stack>
+            ) : (
+              <>
+                <Button
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  color={"white"}
+                  bg={"pink.400"}
+                  onClick={() => loginWithRedirect()}
+                  _hover={{
+                    bg: "pink.300",
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
+          </Stack>
+        ) : null}
       </Flex>
     </Box>
   );

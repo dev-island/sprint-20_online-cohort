@@ -1,10 +1,14 @@
 import { Navigate, RouteProps } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
 
 import { FC } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const AuthRoute: FC<RouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated } = useAuth0();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   if (!isAuthenticated) {
     return <Navigate to="/" />;
   }
