@@ -1,6 +1,7 @@
 const passport = require("passport");
 const User = require("../models/User");
 const { getToken } = require("../lib/jwt");
+const jwt = require("jsonwebtoken");
 
 const handleLogin = async (req, res, next) => {
   try {
@@ -28,8 +29,12 @@ const handleLogin = async (req, res, next) => {
       }
 
       // if the user is authenticated, we generate a token and send it back
-      const token = getToken(user._id);
-      res.status(200).json({ data: { accessToken: `Bearer ${token}` } });
+      // const token = getToken(user._id, { username, });
+      const token = jwt.sign({ sub: user._id, ...user }, process.env.JWT_SECRET, {
+        expiresIn: 3600,
+      });
+      
+      res.status(200).json({ data: { thisIsTheJWT: `Bearer ${token}` } });
     });
   } catch (error) {
     next(error);
@@ -45,8 +50,11 @@ const handleRegister = async (req, res, next) => {
       }
       // Now that we have stored the user in the DB, we create a JWT and send it back to the client
       // Call the getToken method from the lib/jwt.js file (the one Andrew wrote for this demo)
-      const token = getToken(user._id, { ...user });
-      res.status(201).json({ data: { accessToken: `Bearer ${token}` } });
+      const token = getToken(user._id);
+      // const token = jwt.sign({ sub: id, ...params }, process.env.JWT_SECRET, {
+      //   expiresIn: 3600,
+      // });
+      res.status(201).json({ data: { thisIsTheJWT: `Bearer ${token}`, user } });
     });
   } catch (error) {
     next(error);

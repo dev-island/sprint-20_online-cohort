@@ -4,7 +4,7 @@ import useLogout from "../hooks/useLogout";
 
 export default function Navbar() {
   const { isAuthenticated } = useAuth();
-  const { logout, loading } = useLogout()
+  const { logout, loading } = useLogout();
 
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkColorHover = useColorModeValue("gray.800", "white");

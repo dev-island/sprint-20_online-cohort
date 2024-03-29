@@ -7,6 +7,7 @@ type AuthContextType = {
   setToken: (token: string | null) => void;
   isAuthenticated: boolean;
   userId: string | null;
+  username: string | null;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -14,19 +15,24 @@ export const AuthContext = createContext<AuthContextType>({
   setToken: () => {},
   isAuthenticated: false,
   userId: null,
+  username: null,
 });
 
 type Props = {
   children: React.ReactNode;
 };
 
-const AuthProvider: FC<Props> = ({ children }) => {
+const AndrewsCustomProvider: FC<Props> = ({ children }) => {
+  const [username, setUsername] = useState<string | null>(null);
   const [userId, setUserId] = useState(() => {
     const _token = localStorage.getItem("accessToken");
     if (!_token) {
       return null;
     }
-    return jwtDecode(_token)?.sub || null;
+    console.log("TOKEN", _token);
+    const decoded = jwtDecode(_token);
+    console.log("DECODED", decoded);
+    return decoded?.sub || null;
   });
   const [token, setToken] = useState<string | null>(() => {
     const _token = localStorage.getItem("accessToken");
@@ -35,11 +41,17 @@ const AuthProvider: FC<Props> = ({ children }) => {
     }
     return JSON.parse(_token);
   });
+
   const isAuthenticated = !!token;
 
   useEffect(() => {
     if (token) {
       localStorage.setItem("accessToken", JSON.stringify(token));
+      const decoded = jwtDecode(token);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      const _username = decoded?._doc?.username;
+      setUsername(_username);
       setUserId(jwtDecode(token)?.sub || null);
     } else {
       localStorage.removeItem("accessToken");
@@ -47,10 +59,10 @@ const AuthProvider: FC<Props> = ({ children }) => {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, isAuthenticated, userId }}>
+    <AuthContext.Provider value={{ token, setToken, isAuthenticated, userId, username }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export default AuthProvider;
+export default AndrewsCustomProvider;

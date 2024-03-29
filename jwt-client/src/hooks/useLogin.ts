@@ -16,8 +16,7 @@ const useLogin = () => {
     setLoading(true);
     try {
       const res = await api.login({ username, password });
-      console.log("RES", res)
-      setToken(res.accessToken);
+      setToken(res.thisIsTheJWT);
       navigate("/profile");
     } catch (err) {
       console.error("Failed to login", err);

@@ -21,9 +21,9 @@ type Props = {
   submit: (formData: any) => void;
   initState: Record<string, string>;
   cta: string;
-  link: string;
-  linkPrompt: string;
-  linkText: string;
+  link?: string;
+  linkPrompt?: string;
+  linkText?: string;
   loading: boolean;
 };
 
@@ -103,14 +103,16 @@ const Form: FC<Props> = ({
             </Button>
           </Stack>
         </Box>
-        <Stack pt={6}>
-          <Text align={"center"}>
-            {linkPrompt}{" "}
-            <Link href={link} color={"blue.400"}>
-              {linkText}
-            </Link>
-          </Text>
-        </Stack>
+        {linkPrompt && link && linkText && (
+          <Stack pt={6}>
+            <Text align={"center"}>
+              {linkPrompt}{" "}
+              <Link href={link} color={"blue.400"}>
+                {linkText}
+              </Link>
+            </Text>
+          </Stack>
+        )}
       </Stack>
     </Flex>
   );

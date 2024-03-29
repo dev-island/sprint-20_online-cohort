@@ -71,8 +71,10 @@ passport.use(
 // Routes
 const authRouter = require("./routes/auth.routes");
 const userRouter = require("./routes/user.routes");
+const todosRouter = require("./routes/todos.routes");
 app.use("/auth", authRouter);
 app.use("/users", checkIsAuthenticated, userRouter);
+app.use("/todos", checkIsAuthenticated, todosRouter);
 app.get("/open", (req, res) => {
   return res.status(200).json({ message: "Open route" });
 });

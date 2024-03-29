@@ -21,8 +21,8 @@ const useRegister = () => {
     setLoading(true);
     try {
       const res = await api.register({ username, password, confirmPassword });
-      console.log("RES", res.accessToken);
-      setToken(res.accessToken);
+      console.log("RES", res);
+      setToken(res.thisIsTheJWT);
       navigate("/profile");
     } catch (err) {
       console.error("failed to register", err);

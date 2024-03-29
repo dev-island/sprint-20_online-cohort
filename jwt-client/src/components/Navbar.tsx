@@ -3,7 +3,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import useLogout from "../hooks/useLogout";
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, userId } = useAuthContext();
   const { logout, loading } = useLogout();
 
   const linkColor = useColorModeValue("gray.600", "gray.200");
@@ -25,20 +25,36 @@ export default function Navbar() {
       >
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           {isAuthenticated && (
-            <Box
-              as="a"
-              p={2}
-              href={"/profile"}
-              fontSize={"sm"}
-              fontWeight={500}
-              color={linkColor}
-              _hover={{
-                textDecoration: "none",
-                color: linkColorHover,
-              }}
-            >
-              Profile
-            </Box>
+            <>
+              <Box
+                as="a"
+                p={2}
+                href={`/users/${userId}`}
+                fontSize={"sm"}
+                fontWeight={500}
+                color={linkColor}
+                _hover={{
+                  textDecoration: "none",
+                  color: linkColorHover,
+                }}
+              >
+                Profile
+              </Box>
+              <Box
+                as="a"
+                p={2}
+                href={`/users/`}
+                fontSize={"sm"}
+                fontWeight={500}
+                color={linkColor}
+                _hover={{
+                  textDecoration: "none",
+                  color: linkColorHover,
+                }}
+              >
+                Users
+              </Box>
+            </>
           )}
         </Flex>
 
